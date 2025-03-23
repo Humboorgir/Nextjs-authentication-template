@@ -1,0 +1,5 @@
+{
+  "componentsFolderPath": "./src/components/ui",
+  "hooksFolderPath": "./src/hooks",
+  "preferredPackageManager": "bun"
+}
