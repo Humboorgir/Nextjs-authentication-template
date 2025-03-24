@@ -1,5 +1,9 @@
 import { GetServerSidePropsContext } from "next";
-import { getSession } from "../lib/auth";
+import { getSession } from "@/lib/auth";
+
+export default function Dashboard({ user }: { user: any }) {
+  return <h1>Welcome, {user.name}</h1>;
+}
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getSession(context.req);
@@ -15,8 +19,4 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: { user: session.user },
   };
-}
-
-export default function Dashboard({ user }: { user: any }) {
-  return <h1>Welcome, {user.name}</h1>;
 }

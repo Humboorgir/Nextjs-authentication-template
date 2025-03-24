@@ -1,10 +1,9 @@
 import { db } from "@/lib/db";
 import cookie from "cookie";
-import { GetServerSidePropsContext, NextApiRequest } from "next";
+import { GetServerSidePropsContext } from "next";
 
 export async function getSession(req: GetServerSidePropsContext["req"]) {
-  const cookies = cookie.parse(req.headers.cookie || "");
-  const sessionId = cookies.sessionId;
+  const { sessionId } = cookie.parse(req.headers.cookie || "");
 
   if (!sessionId) {
     return null;
@@ -12,11 +11,11 @@ export async function getSession(req: GetServerSidePropsContext["req"]) {
 
   const session = await db.session.findUnique({
     where: { id: sessionId },
-    include: { user: true }, // Include user data
+    include: { user: true },
   });
 
   if (!session || session.expiresAt < new Date()) {
-    return null; // Session is invalid or expired
+    return null; // session is invalid or expired
   }
 
   return session;

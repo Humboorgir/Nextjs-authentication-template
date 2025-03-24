@@ -1,15 +1,20 @@
-import { NextApiResponse } from "next";
-import { cookies } from "next/headers";
+import type { NextApiResponse } from "next";
+
+import cookie from "cookie";
 
 export default async function setSessionCookie(
   res: NextApiResponse,
-  token: string,
+  sessionId: string,
   expiresAt: Date
-): Promise<void> {
+) {
   res.setHeader(
     "Set-Cookie",
-    `sessionId=${token}; HttpOnly; Path=/; Expires=${expiresAt.toUTCString()}; SameSite=Strict; ${
-      process.env.NODE_ENV === "production" ? "Secure" : ""
-    }`
+    cookie.serialize("sessionId", sessionId, {
+      httpOnly: true,
+      path: "/",
+      expires: expiresAt,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    })
   );
 }
