@@ -1,8 +1,9 @@
-import setSessionCookie from "@/lib/auth/setSessionCookie";
-import { db } from "@/lib/db";
-import { signInSchema } from "@/lib/schema/sign-in-schema";
+import type { NextApiRequest, NextApiResponse } from "next";
+
 import bcrypt from "bcryptjs";
-import { NextApiRequest, NextApiResponse } from "next";
+import setSessionCookie from "@/lib/auth/setSessionCookie";
+import { signInSchema } from "@/lib/schema/sign-in-schema";
+import { db } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
 
 export type SignInResponse = {

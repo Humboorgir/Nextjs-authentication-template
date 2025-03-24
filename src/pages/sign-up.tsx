@@ -16,6 +16,7 @@ import { userSchema, UserSchema } from "@/lib/schema/user-schema";
 import GeneralLayout from "@/layouts/general-layout";
 
 export default function SignUp() {
+  // TODO: implement a hook for signUp
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,7 +29,7 @@ export default function SignUp() {
   const onSubmit: SubmitHandler<UserSchema> = async (data) => {
     setIsLoading(true);
 
-    const signUserIn = async () => {
+    const signUp = async () => {
       const res = await fetch("/api/auth/sign-up", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -43,7 +44,7 @@ export default function SignUp() {
       }
     };
 
-    toast.promise(signUserIn(), {
+    toast.promise(signUp(), {
       loading: "Authorizing...",
       success: () => {
         router.push("/");
@@ -79,6 +80,7 @@ export default function SignUp() {
               <Input
                 className="w-full"
                 placeholder={itemLabel}
+                type={itemName == "password" ? "password" : "text"}
                 {...register(itemName)}
               />
               {errors[itemName] && (

@@ -2,14 +2,15 @@
 
 @theme {
   --animate-ripple: ripple 600ms linear;
+
   @keyframes ripple {
     0% {
-      opacity: "40%";
-      transform: scale(0);
+      opacity: 40%;
+      scale: 0;
     }
     100% {
-      opacity: "0%";
-      transform: scale(3);
+      opacity: 0%;
+      scale: 3;
     }
   }
 

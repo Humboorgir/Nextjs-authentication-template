@@ -1,3 +1,5 @@
+import Footer from "@/components/ui/footer";
+import Navbar from "@/components/ui/navbar";
 import React from "react";
 
 type GeneralLayoutProps = {
@@ -7,9 +9,9 @@ type GeneralLayoutProps = {
 export default function GeneralLayout({ children }: GeneralLayoutProps) {
   return (
     <div className="grid min-h-screen grid-rows-[auto,1fr,auto]">
-      <nav></nav>
+      <Navbar />
       <main>{children}</main>
-      <footer></footer>
+      <Footer />
     </div>
   );
 }

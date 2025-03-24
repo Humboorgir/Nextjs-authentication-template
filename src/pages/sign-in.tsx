@@ -1,3 +1,5 @@
+import type { GetServerSidePropsContext } from "next";
+
 import React from "react";
 import GeneralLayout from "@/layouts/general-layout";
 import Container from "@/components/ui/container";
@@ -5,18 +7,15 @@ import Text from "@/components/ui/text";
 import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
 
-import { toast } from "sonner";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useSignIn } from "@/hooks/useSignIn";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, SignInSchema } from "@/lib/schema/sign-in-schema";
-import { SignInResponse } from "./api/auth/sign-in";
+import { getSession } from "@/lib/auth";
 
 export default function SignIn() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const { signIn, isLoading } = useSignIn();
 
   const {
     register,
@@ -25,36 +24,7 @@ export default function SignIn() {
   } = useForm<SignInSchema>({ resolver: zodResolver(signInSchema) });
 
   const onSubmit: SubmitHandler<SignInSchema> = async (data) => {
-    setIsLoading(true);
-
-    const signUserIn = async () => {
-      const res = await fetch("/api/auth/sign-in", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data }),
-      });
-
-      if (res.ok) {
-        router.push("/");
-      } else {
-        const { message } = (await res.json()) as SignInResponse;
-        throw new Error(message);
-      }
-    };
-
-    toast.promise(signUserIn(), {
-      loading: "Authorizing...",
-      success: () => {
-        router.push("/");
-        return `Welcome back!`;
-      },
-      error: (err) => {
-        return err.message;
-      },
-      finally: () => {
-        setIsLoading(false);
-      },
-    });
+    signIn(data);
   };
 
   return (
@@ -78,6 +48,7 @@ export default function SignIn() {
               <Input
                 className="w-full"
                 placeholder={itemLabel}
+                type={itemName == "password" ? "password" : "text"}
                 {...register(itemName)}
               />
               {errors[itemName] && (
@@ -101,6 +72,22 @@ export default function SignIn() {
       </form>
     </Container>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getSession(context.req);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }
 
 SignIn.getLayout = function getLayout(page: React.ReactElement) {
