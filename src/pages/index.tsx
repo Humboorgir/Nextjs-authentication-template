@@ -6,7 +6,7 @@ import Container from "@/components/ui/container";
 import Text from "@/components/ui/text";
 import Button from "@/components/ui/button";
 
-import { useSignOut } from "@/hooks/useSignOut";
+import { useAuth } from "@/hooks/useAuth";
 import { getSession } from "@/lib/auth";
 
 import { LogOut as SignOutIcon } from "lucide-react";
@@ -16,7 +16,7 @@ type HomeProps = {
 };
 
 export default function Home({ user }: HomeProps) {
-  const { signOut, isLoading } = useSignOut();
+  const { signOut, isLoading } = useAuth();
 
   return (
     <Container className="flex flex-col items-center text-center">

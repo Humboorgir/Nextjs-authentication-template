@@ -1,24 +1,17 @@
-import type { SignUpResponse } from "./api/auth/sign-up";
-
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
+import GeneralLayout from "@/layouts/general-layout";
 import Container from "@/components/ui/container";
 import Text from "@/components/ui/text";
 import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
 
-import { toast } from "sonner";
-import { useRouter } from "next/router";
-import { useState } from "react";
-
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema, UserSchema } from "@/lib/schema/user-schema";
-import GeneralLayout from "@/layouts/general-layout";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SignUp() {
-  // TODO: implement a hook for signUp
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const { signUp, signIn, isLoading } = useAuth();
 
   const {
     register,
@@ -27,35 +20,8 @@ export default function SignUp() {
   } = useForm<UserSchema>({ resolver: zodResolver(userSchema) });
 
   const onSubmit: SubmitHandler<UserSchema> = async (data) => {
-    setIsLoading(true);
-
-    const signUp = async () => {
-      const res = await fetch("/api/auth/sign-up", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data }),
-      });
-
-      if (res.ok) {
-        router.push("/sign-in");
-      } else {
-        const { message } = (await res.json()) as SignUpResponse;
-        throw new Error(message);
-      }
-    };
-
-    toast.promise(signUp(), {
-      loading: "Authorizing...",
-      success: () => {
-        router.push("/");
-        return `Welcome back!`;
-      },
-      error: (err) => {
-        return String(err);
-      },
-      finally: () => {
-        setIsLoading(false);
-      },
+    signUp(data, {
+      onSuccess: () => signIn({ email: data.email, password: data.password }),
     });
   };
 

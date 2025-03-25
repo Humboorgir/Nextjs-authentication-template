@@ -7,7 +7,7 @@ import Text from "@/components/ui/text";
 import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
 
-import { useSignIn } from "@/hooks/useSignIn";
+import { useAuth } from "@/hooks/useAuth";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +15,7 @@ import { signInSchema, SignInSchema } from "@/lib/schema/sign-in-schema";
 import { getSession } from "@/lib/auth";
 
 export default function SignIn() {
-  const { signIn, isLoading } = useSignIn();
+  const { signIn, isLoading } = useAuth();
 
   const {
     register,

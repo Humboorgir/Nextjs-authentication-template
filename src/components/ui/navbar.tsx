@@ -5,14 +5,14 @@ import Dropdown from "@/components/ui/dropdown";
 import Skeleton from "@/components/ui/skeleton";
 
 import { useUser } from "@/hooks/useUser";
-import { useSignOut } from "@/hooks/useSignOut";
+import { useAuth } from "@/hooks/useAuth";
 
 import { LogOut as SignOutIcon } from "lucide-react";
 
 export default function Navbar() {
   // TODO: clean up the code here
   const { isLoading, data } = useUser();
-  const { signOut } = useSignOut();
+  const { signOut } = useAuth();
 
   return (
     <header>
