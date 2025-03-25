@@ -11,7 +11,7 @@ export function useUser() {
       throw new Error(String(data.message));
     });
 
-  const { error, ...fetchInfo } = useSWR(`/api/auth/user`, fetcher);
+  const { data, ...fetchInfo } = useSWR(`/api/auth/user`, fetcher);
 
-  return { ...fetchInfo };
+  return { user: data?.user, ...fetchInfo };
 }

@@ -1,7 +1,7 @@
 import type { User } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { getSession } from "@/lib/auth";
+import { getSession } from "@/lib/auth/getSession";
 
 export type UserResponse = {
   message?: String;

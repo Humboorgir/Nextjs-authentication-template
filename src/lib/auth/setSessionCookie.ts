@@ -2,7 +2,7 @@ import type { NextApiResponse } from "next";
 
 import cookie from "cookie";
 
-export default async function setSessionCookie(
+export async function setSessionCookie(
   res: NextApiResponse,
   sessionId: string,
   expiresAt: Date

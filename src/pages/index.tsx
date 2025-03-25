@@ -19,21 +19,35 @@ export default function Home({ user }: HomeProps) {
   const { signOut, isLoading } = useAuth();
 
   return (
-    <Container className="flex flex-col items-center text-center">
-      <Text variant="h2">Welcome back {user.name}!</Text>
-      <div className="w-fit">
-        <Text className="mb-3" variant="p">
-          This is a protected page.
-        </Text>
-        <Button
-          onClick={signOut}
-          className="w-full"
-          variant="default"
-          isLoading={isLoading}>
-          <SignOutIcon className="mr-2 h-3.5 w-3.5" /> Sign out
-        </Button>
-      </div>
-    </Container>
+    <>
+      <Container className="flex flex-col items-center text-center">
+        <Text variant="h2">Welcome back {user.name}!</Text>
+        <div className="w-fit">
+          <Text className="mb-3 max-w-xs" variant="p">
+            This page is server protected.
+          </Text>
+          <Button
+            onClick={signOut}
+            className="w-full"
+            variant="default"
+            isLoading={isLoading}>
+            <SignOutIcon className="mr-2 h-3.5 w-3.5" /> Sign out
+          </Button>
+        </div>
+      </Container>
+
+      <Container className="mt-12 text-center">
+        <span className="text-foreground-light">
+          For a client-protected example, visit
+          <Button
+            className="ml-1.5 p-0"
+            variant="link"
+            href="/client-protected">
+            http://localhost:3000/client-protected
+          </Button>
+        </span>
+      </Container>
+    </>
   );
 }
 

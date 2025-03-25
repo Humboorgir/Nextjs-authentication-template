@@ -11,7 +11,7 @@ import { LogOut as SignOutIcon } from "lucide-react";
 
 export default function Navbar() {
   // TODO: clean up the code here
-  const { isLoading, data } = useUser();
+  const { isLoading, user } = useUser();
   const { signOut } = useAuth();
 
   return (
@@ -21,7 +21,7 @@ export default function Navbar() {
         <nav>
           {isLoading ? (
             <Skeleton className="h-10 w-20" />
-          ) : data?.user ? (
+          ) : user ? (
             <Dropdown
               items={[
                 {
@@ -34,7 +34,7 @@ export default function Navbar() {
                 },
               ]}
               variant="outline">
-              {data.user.name}
+              {user.name}
             </Dropdown>
           ) : (
             <ul className="flex items-center">

@@ -2,9 +2,7 @@ import { db } from "@/lib/db";
 import cookie from "cookie";
 import { GetServerSidePropsContext } from "next";
 
-export default async function getSession(
-  req: GetServerSidePropsContext["req"]
-) {
+export async function getSession(req: GetServerSidePropsContext["req"]) {
   const cookies = cookie.parse(req.headers.cookie || "");
   const sessionId = cookies.sessionId;
 

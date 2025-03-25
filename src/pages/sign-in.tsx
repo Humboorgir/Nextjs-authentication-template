@@ -12,7 +12,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, SignInSchema } from "@/lib/schema/sign-in-schema";
-import { getSession } from "@/lib/auth";
+import { getSession } from "@/lib/auth/getSession";
 
 export default function SignIn() {
   const { signIn, isLoading } = useAuth();

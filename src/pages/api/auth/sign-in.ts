@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import bcrypt from "bcryptjs";
-import setSessionCookie from "@/lib/auth/setSessionCookie";
+import { setSessionCookie } from "@/lib/auth/setSessionCookie";
 import { signInSchema } from "@/lib/schema/sign-in-schema";
 import { db } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
